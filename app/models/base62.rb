@@ -15,6 +15,8 @@ class Base62
   end
 
   def self.decode(string)
-
+    number = 0
+    string.each_char { |char| number = number * BASE + ALPHABET.index(char) }
+    number
   end
 end
