@@ -1,4 +1,17 @@
-<h1>URL Shortener</h1>
+<nav class="flex items-baseline justify-between">
+  <h1>URL Shortener</h1>
+  <div class="flex gap-2">
+    <% if current_user %>
+      <%= link_to "Profile", edit_user_password_path %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path %>
+      <%= link_to "Sign Up", new_user_registration_path %>
+    <% end %>
+
+  </div>
+</nav>
+
 
 <%= render partial: "form", locals: { link: @link } %>
 
