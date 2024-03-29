@@ -1,12 +1,20 @@
 class LinksController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :set_link, only: [:show, :edit, :update, :destroy]
+  before_action :allow_editing_link, only: [:edit, :update, :destroy]
+
   def index
-    @links = Link.recent_first
+    if current_user
+      @links = current_user.links.recent_first if current_user
+    else
+      @links = Link.recent_first
+    end
     @link = Link.new
   end
 
   def create
     @link = Link.new(link_params)
+    @link.user = current_user
     if @link.save
       respond_to do |format|
         format.html { redirect_to root_path }
@@ -43,4 +51,7 @@ class LinksController < ApplicationController
     params.require(:link).permit(:url)
   end
 
+  def allow_editing_link
+    redirect_to root_path unless @link.user == current_user
+  end
 end
