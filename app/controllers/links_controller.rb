@@ -21,6 +21,7 @@ class LinksController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.prepend("links", @link) }
       end
     else
+      index # this is added because index.html needs @links and @link
       render :index, status: :unprocessable_entity
     end
   end
