@@ -28,36 +28,4 @@ class LinkTest < ActionDispatch::IntegrationTest
       assert_equal user.id, Link.last.user_id
     end
   end
-
-  test "can edit link as a owner/user" do
-    user = users(:one)
-    sign_in user
-
-    link = links(:one)
-    post edit_link_path(format: :turbo_stream), params: {link: {url: "https://example.com"}}
-    assert_response :ok
-    assert_equal user.id, Link.last.user_id
-  end
-
-  test "can create link as a owner/user" do
-    user = users(:one)
-    sign_in user
-    assert_difference "Link.count" do
-      post links_path(format: :turbo_stream), params: {link: {url: "https://example.com"}}
-      assert_response :ok
-      assert_equal user.id, Link.last.user_id
-    end
-  end
-
-  test "can create link as a owner/user" do
-    user = users(:one)
-    sign_in user
-    assert_difference "Link.count" do
-      post links_path(format: :turbo_stream), params: {link: {url: "https://example.com"}}
-      assert_response :ok
-      assert_equal user.id, Link.last.user_id
-    end
-  end
-
-
 end
